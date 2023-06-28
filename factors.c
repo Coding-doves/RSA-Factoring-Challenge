@@ -4,7 +4,7 @@
 
 #define SIZE 1024
 
-void factorial(char *token);
+int factorial(char *token);
 
 /**
  * main - entry point
@@ -17,7 +17,6 @@ int main(int argc, char **argv)
 	FILE *f;
 	char s[SIZE];
 
-	(void)**argv;
 	if (argc != 2)
 	{
 		fprintf(stderr, "Usage: factors <file>\n");
@@ -27,31 +26,33 @@ int main(int argc, char **argv)
 	f = fopen(argv[1], "r");
 	if (f == NULL)
 	{
-		fprintf(stderr, "Unable to open %s\n", argv[1]);
-		 exit(EXIT_FAILURE);
+		fprintf(stderr, "Error: Unable to open %s\n", argv[1]);
+		exit(EXIT_FAILURE);
 	}
 
-	while(fgets(s, sizeof(s), f) != NULL)
+	while (fgets(s, sizeof(s), f) != NULL)
 	{
-		char *token;
-
-		token = strtok(s, " \n");
-		factorial(token);
+		factorial(s);
 	}
 	fclose(f);
 	return (0);
 }
 
-void factorial(char *token)
+/**
+ * factorial - find factorial of n
+ * @s: num to factor
+ */
+int factorial(char *s)
 {
 	u_int64_t n, q, p;
 
-	n = atoi(token);
-	printf("%lu\n", n);
+	n = atoi(s);
 
 	for (q = 2; n % q != 0; q++)
 		;
 	p = n / q;
 
 	printf("%lu=%lu*%lu\n", n, p, q);
+	
+	return (0);
 }
