@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #define SIZE 1024
+#define _GNU_SOURCE
 
-int factorial(char *token);
+void factorial(char *s);
 
 /**
  * main - entry point
@@ -16,7 +18,7 @@ int main(int argc, char **argv)
 {
 	FILE *f;
 	char s[SIZE];
-
+		
 	if (argc != 2)
 	{
 		fprintf(stderr, "Usage: factors <file>\n");
@@ -42,17 +44,15 @@ int main(int argc, char **argv)
  * factorial - find factorial of n
  * @s: num to factor
  */
-int factorial(char *s)
+void factorial(char *s)
 {
-	u_int64_t n, q, p;
+	long int n, q, p;
 
-	n = atoi(s);
+	sscanf(s, "%ld", &n);
 
 	for (q = 2; n % q != 0; q++)
 		;
 	p = n / q;
 
-	printf("%lu=%lu*%lu\n", n, p, q);
-	
-	return (0);
+	printf("%ld=%ld*%ld\n", n, p, q);
 }
